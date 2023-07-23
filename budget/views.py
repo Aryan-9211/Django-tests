@@ -35,11 +35,14 @@ def project_detail(request, project_slug):
             )
 
     elif request.method == 'DELETE':
+      try:
         id = json.loads(request.body)['id']
         expense = Expense.objects.get(id=id)
         expense.delete()
+      except:
+        return HttpResponse(status=404)
 
-        return HttpResponse(status=204)
+      return HttpResponse(status=204)
 
     return redirect(project)
 
